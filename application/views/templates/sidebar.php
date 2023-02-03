@@ -22,6 +22,7 @@
                            WHERE `user_access_menu`.`role_id` = $role_id
                         ORDER BY `user_access_menu`.`menu_id` ASC
             ";
+
             $menu = $this->db->query($queryMenu)->result_array();
             // var_dump($menu);
             // die;
@@ -54,32 +55,36 @@
 
                 <?php foreach ($subMenu as $sm) : ?>
 
-                    <li class="nav-item">
+                    <?php if ($title == $sm['title']) : ?>
+                        <li class="nav-item active">
+                        <?php else : ?>
+                        <li class="nav-item">
+                        <?php endif; ?>
                         <a class="nav-link" href="<?php echo base_url($sm['url']) ?>">
                             <i class="<?php echo $sm['icon']; ?>"></i>
                             <span><?php echo $sm['title']; ?></span></a>
-                    </li>
+                        </li>
+
+                    <?php endforeach; ?>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
 
                 <?php endforeach; ?>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('auth/logout') ?>">
+                        <i class="fas fa-fw fa-sign-out-alt"></i>
+                        <span>Logout</span></a>
+                </li>
+
                 <!-- Divider -->
-                <hr class="sidebar-divider">
+                <hr class="sidebar-divider d-none d-md-block">
 
-            <?php endforeach; ?>
-
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url('auth/logout') ?>">
-                    <i class="fas fa-fw fa-sign-out-alt"></i>
-                    <span>Logout</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
 
         </ul>
         <!-- End of Sidebar -->
